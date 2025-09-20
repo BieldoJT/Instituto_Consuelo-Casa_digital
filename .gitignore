@@ -1,0 +1,25 @@
+# Arquivos temporários
+*.tmp
+*~
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Dependências (exemplo para projetos Node.js)
+node_modules/
+
+# Arquivos de build
+dist/
+build/
+
+# Arquivos de configuração local
+.env
+config.local.*
+
+# Arquivos de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
