@@ -45,6 +45,7 @@ def validar_senha(senha):
 		validar_letra_minuscula(senha)
 		validar_numeros(senha)
 		validar_caracter_especial(senha)
+		return True
 	except:
-		raise ValueError("qurbrou")
+		return False
 
