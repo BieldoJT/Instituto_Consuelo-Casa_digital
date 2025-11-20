@@ -4,12 +4,6 @@ from typing import List
 from app.database import engine, Base
 from app.routes import produtos
 
-Base.metadata.create_all(bind=engine)
-app = FastAPI(title="API de Produtos")
-
-# Simulando um banco de dados em memória
-produtos_db = []
-proximo_id = 1
 
 # Cria a instância da aplicação FastAPI
 Base.metadata.create_all(bind=engine)
