@@ -6,7 +6,7 @@ class Livro(Base):
 
 	__tablename__="livros"
 
-	id = Column(primary_key=True, autoincrement=True)
+	id = Column(Integer, primary_key=True, autoincrement=True)
 	titulo = Column(String(200),nullable=False)
 	autor = Column(String(100), nullable=False)
 	ano_publicacao = Column(Integer, nullable=False)

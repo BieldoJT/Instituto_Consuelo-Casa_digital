@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from typing import List
 from biblioteca.database import engine, Base
+from biblioteca.routes import livros
 
 
 Base.metadata.create_all(bind=engine)
@@ -13,6 +14,8 @@ router = FastAPI(
 )
 
 #Aqui é pra incluir os routers
+router.include_router(livros.router)
+
 
 #router.include_router
 

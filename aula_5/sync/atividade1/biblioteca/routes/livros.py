@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
 
-from app.database import get_db
+from biblioteca.database import get_db
 from biblioteca.models import Livro
 from biblioteca.schemas import LivroCreate, LivroResponse, LivroUpdate
 
@@ -46,13 +46,16 @@ def listar_livros(
 	#inicia a query - SELECT * FROM livros
 	query = db.query(Livro)
 
-	if autor and disponivel:
+	print(Livro.autor)
+	print()
+
+	if autor and (disponivel!= None):
 		query = query.filter(
 			Livro.autor == autor,
 			Livro.disponivel == disponivel)
 	elif(autor):
-		query = query.filter(Livro.autor == autor)
-	elif(disponivel):
+		query = query.filter(Livro.autor.ilike(f"%{autor}%"))
+	elif(disponivel != None):
 		query = query.filter(Livro.disponivel == disponivel)
 
 	livro = query.offset(skip).limit(limit).all()

@@ -9,8 +9,8 @@ class LivroBase(BaseModel):
 	titulo:str = Field(..., max_length=200, description="Titulo do livro")
 	autor:str = Field(..., min_length=3, description="Autor do livro")
 	ano_publicacao:int = Field(..., gt=0, description="Ano de publicação do livro")
-	isbn:str = Field(...,unique=True, min_length=13)
-	disponivel:bool = Field(...,default=True, description="Booleano pra definir se livro esta disponivel")
+	isbn:str = Field(...,unique=True, min_length=13, max_length=50)
+	disponivel:bool = Field(default=True, description="Booleano pra definir se livro esta disponivel")
 
 #criar isso para poder criar o livro
 class LivroCreate(LivroBase):
