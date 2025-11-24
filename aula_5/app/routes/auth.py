@@ -40,7 +40,8 @@ def cria_usuario(usuario: UsuarioCreate, db: Session = Depends(get_db)):
 	db_usuario = Usuario(
 		username = usuario.username,
 		email = usuario.email,
-		senha_hash = get_password_hash(usuario.senha_hash)
+		senha_hash = get_password_hash(usuario.senha_hash),
+		role = usuario.role
 	)
 
 	db.add(db_usuario)

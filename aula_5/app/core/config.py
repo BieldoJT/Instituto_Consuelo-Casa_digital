@@ -80,3 +80,18 @@ def require_auth(
     """
     return current_user
 
+def require_roles(allowed_roles: list[str]):
+    """
+    Cria uma dependência que só permite usuários com certas roles.
+    Uso: Depends(require_roles(["admin"]))
+    """
+    def dependency(current_user: Usuario = Depends(get_current_user)) -> Usuario:
+        if current_user.role not in allowed_roles:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Você não tem permissão para acessar este recurso."
+            )
+        return current_user
+
+    return dependency
+

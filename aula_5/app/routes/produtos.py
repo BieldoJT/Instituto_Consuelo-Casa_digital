@@ -3,9 +3,9 @@ from sqlalchemy.orm import Session
 from typing import List
 
 from app.database import get_db
-from app.models import Produto
+from app.models import Produto, Usuario
 from app.schemas import ProdutoCreate, ProdutoResponse, ProdutoUpdate, ProdutoEstoqueUpdate
-from app.core.config import require_auth
+from app.core.config import require_auth, require_roles
 
 # Cria o router para organizar as rotas
 router = APIRouter(
@@ -126,7 +126,7 @@ def atualizar_produto(
 
 # ==================== DELETE ====================
 @router.delete("/{produto_id}", status_code=status.HTTP_204_NO_CONTENT)
-def deletar_produto(produto_id: int, db: Session = Depends(get_db)):
+def deletar_produto(produto_id: int, db: Session = Depends(get_db), usuario: Usuario = Depends(require_roles(["admin"]))):
     """
     Remove um produto do banco de dados.
 
