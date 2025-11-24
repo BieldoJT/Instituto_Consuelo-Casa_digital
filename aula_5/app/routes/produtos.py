@@ -4,7 +4,7 @@ from typing import List
 
 from app.database import get_db
 from app.models import Produto
-from app.schemas import ProdutoCreate, ProdutoResponse, ProdutoUpdate
+from app.schemas import ProdutoCreate, ProdutoResponse, ProdutoUpdate, ProdutoEstoqueUpdate
 
 # Cria o router para organizar as rotas
 router = APIRouter(
@@ -142,3 +142,44 @@ def deletar_produto(produto_id: int, db: Session = Depends(get_db)):
     db.commit()
 
     return None  # 204 não retorna conteúdo
+
+# ==================== LISTA CATEGORIA ====================
+@router.get("/categoria/{categoria}", response_model=list[ProdutoResponse])
+def produtos_categoria(categoria: str, db:Session = Depends(get_db)):
+    """
+    Busca uma lista de produtos de uma certa categoria
+    """
+    produtos = db.query(Produto).filter(Produto.categoria == categoria).all()
+
+    if not produtos:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Categoria {categoria} não encontrado"
+        )
+
+    return produtos
+
+@router.patch("/{id}/estoque", response_model=ProdutoResponse)
+def atualiza_estoque(
+    id:int,
+    produto_update: ProdutoEstoqueUpdate,
+    db: Session = Depends(get_db)
+):
+    """
+    Modifica apenas o estoque do produto.
+    """
+
+    db_produto = db.query(Produto).filter(Produto.id == id).first()
+
+    if  not db_produto:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Produto com ID: {id} não encontrado"
+        )
+
+    db_produto.estoque = produto_update.estoque
+
+    db.commit()
+    db.refresh(db_produto)
+
+    return db_produto

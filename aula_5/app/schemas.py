@@ -22,6 +22,9 @@ class ProdutoUpdate(BaseModel):
     estoque: Optional[int] = Field(None, ge=0)
     categoria: Optional[str] = Field(None, min_length=3)
 
+class ProdutoEstoqueUpdate(BaseModel):
+    estoque: int = Field(...,gt=0, description="Novo estoque do produto")
+
 class ProdutoResponse(ProdutoBase):
     """Schema para resposta (inclui campos do banco)"""
     id: int
