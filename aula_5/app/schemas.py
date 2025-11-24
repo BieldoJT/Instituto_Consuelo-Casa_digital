@@ -2,6 +2,8 @@ from pydantic import BaseModel, Field
 from typing import Optional
 from datetime import datetime
 
+##============PRODUTO===============##
+
 class ProdutoBase(BaseModel):
     """Schema base para produto (dados comuns)"""
     nome: str = Field(..., min_length=3, max_length=100, description="Nome do produto")
@@ -33,3 +35,31 @@ class ProdutoResponse(ProdutoBase):
 
     class Config:
         from_attributes = True  # Permite conversão de modelos SQLAlchemy
+
+##============USUARIO===============##
+
+
+class UsuarioBase(BaseModel):
+    username: str = Field(..., min_length=3, description="Nome do usuario")
+    email: str = Field(..., description="Email do usuario")
+
+class UsuarioCreate(UsuarioBase):
+    senha_hash: str = Field(..., min_length=6, description="Senha do usuario")
+
+class UsuarioResponse(UsuarioBase):
+    id: int
+
+    class Config:
+        from_attributes = True
+
+class UsuarioLogin(BaseModel):
+    username: str
+    senha: str
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+
+
+

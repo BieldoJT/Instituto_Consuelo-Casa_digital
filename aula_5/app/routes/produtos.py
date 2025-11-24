@@ -5,11 +5,13 @@ from typing import List
 from app.database import get_db
 from app.models import Produto
 from app.schemas import ProdutoCreate, ProdutoResponse, ProdutoUpdate, ProdutoEstoqueUpdate
+from app.core.config import require_auth
 
 # Cria o router para organizar as rotas
 router = APIRouter(
     prefix="/produtos",  # Todas as rotas começam com /produtos
-    tags=["Produtos"]    # Agrupa na documentação Swagger
+    tags=["Produtos"],    # Agrupa na documentação Swagger
+    dependencies=[Depends(require_auth)]
 )
 
 # ==================== CREATE ====================

@@ -1,8 +1,7 @@
 from fastapi import FastAPI, HTTPException
-from app.schemas import ProdutoCreate, ProdutoResponse
 from typing import List
 from app.database import engine, Base
-from app.routes import produtos
+from app.routes import produtos, auth
 
 
 # Cria a instância da aplicação FastAPI
@@ -16,6 +15,7 @@ app = FastAPI(
 
 # Incluir routers (modular!)
 app.include_router(produtos.router)
+app.include_router(auth.router)
 
 @app.get("/")
 def read_root():
