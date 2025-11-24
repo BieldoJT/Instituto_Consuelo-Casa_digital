@@ -3,9 +3,10 @@ from sqlalchemy.orm import Session
 from typing import List
 
 from app.database import get_db
-from app.models import Produto, Usuario
-from app.schemas import ProdutoCreate, ProdutoResponse, ProdutoUpdate, ProdutoEstoqueUpdate
-from app.core.config import require_auth, require_roles
+from app.models.produto import Produto
+from app.models.usuario import Usuario
+from app.schemas.produto import ProdutoCreate, ProdutoResponse, ProdutoUpdate, ProdutoEstoqueUpdate
+from app.utils.config import require_auth, require_roles
 
 # Cria o router para organizar as rotas
 router = APIRouter(

@@ -1,5 +1,5 @@
 # app/core/config.py
-from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi import Depends, status, HTTPException
 from sqlalchemy.orm import Session
 from app.database import get_db
 from typing import Optional
@@ -7,7 +7,7 @@ from passlib.hash import pbkdf2_sha256
 from datetime import datetime, timedelta, timezone
 from jose import JWTError, jwt
 from fastapi.security import OAuth2PasswordBearer
-from app.models import Usuario
+from app.models.usuario import Usuario
 
 
 
