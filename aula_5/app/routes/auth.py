@@ -21,6 +21,11 @@ router = APIRouter(
 def get_password_hash(password: str) -> str:
     return pbkdf2_sha256.hash(password)
 
+@router.get("/me", response_model=UsuarioResponse)
+def read_me(current_user: Usuario = Depends(config.require_auth)):
+	return current_user
+
+
 @router.post("/registro", response_model=UsuarioResponse, status_code=status.HTTP_201_CREATED)
 def cria_usuario(usuario: UsuarioCreate, db: Session = Depends(get_db)):
 	"""
